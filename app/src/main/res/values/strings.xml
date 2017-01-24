@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Travel a Lot</string>
+    <string name="title_activity_vacation_package_list">VacationPackageListActivity</string>
+</resources>
