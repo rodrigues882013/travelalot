@@ -13,6 +13,9 @@ import com.android.volley.toolbox.Volley;
 import com.travelalot.felipe.models.VacationPackage;
 import com.travelalot.felipe.utils.Utils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 public class VacationPackageListActivity extends AppCompatActivity {
@@ -37,7 +40,11 @@ public class VacationPackageListActivity extends AppCompatActivity {
                 url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("TravelALot", response);
+                try {
+                    JSONObject vp = new JSONObject(response);
+                } catch (JSONException e) {
+                    Log.e("ERROR", e.getMessage());
+                }
             }
         }, new Response.ErrorListener() {
             @Override

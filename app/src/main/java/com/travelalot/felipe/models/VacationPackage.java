@@ -10,12 +10,18 @@ public class VacationPackage {
     private String packageName;
     private Double price;
     private String description;
+    private String local;
     private InputStream image;
 
-    public VacationPackage(String packageName, Double price, String description, InputStream image) {
+    public VacationPackage(String packageName,
+                           Double price,
+                           String description,
+                           InputStream image,
+                           String local) {
         this.packageName = packageName;
         this.price = price;
         this.description = description;
+        this.local = local;
         this.image = image;
     }
 
@@ -51,6 +57,14 @@ public class VacationPackage {
         this.image = image;
     }
 
+    public String getLocal() {
+        return local;
+    }
+
+    public void setLocal(String local) {
+        this.local = local;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,6 +94,7 @@ public class VacationPackage {
                 "packageName='" + packageName + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
+                ", local='" + local + '\'' +
                 '}';
     }
 }
