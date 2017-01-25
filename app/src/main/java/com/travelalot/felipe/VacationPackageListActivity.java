@@ -14,7 +14,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
 import com.travelalot.felipe.adapters.VacationPackageAdapter;
+import com.travelalot.felipe.helpers.DatabaseHelper;
 import com.travelalot.felipe.models.VacationPackage;
 import com.travelalot.felipe.services.LoadImageTask;
 import com.travelalot.felipe.utils.Utils;
@@ -27,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +40,7 @@ public class VacationPackageListActivity extends AppCompatActivity {
     private List<VacationPackage> packages;
     private VacationPackageAdapter vpAdapter;
     private ListView packageList;
+    protected Dao<VacationPackage, String> packageDao;
 
 
 
@@ -44,6 +49,11 @@ public class VacationPackageListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vacation_package_list);
         final LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        try {
+            packageDao = OpenHelperManager.getHelper(this, DatabaseHelper.class).getPackagesDao();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -57,8 +67,7 @@ public class VacationPackageListActivity extends AppCompatActivity {
         packages = new ArrayList<VacationPackage>();
         packageList = (ListView) findViewById(R.id.package_list);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -78,13 +87,12 @@ public class VacationPackageListActivity extends AppCompatActivity {
                                 price,
                                 local,
                                 url);
-                        packages.add(vPackage);
+                        //packages.add(vPackage);
+
+                        packageDao.create(vPackage);
+
                     }
-
-                    vpAdapter = new VacationPackageAdapter(ctx, Utils.GENERIC_RESOURCE_ID, packages);
-                    packageList.setAdapter(vpAdapter);
-
-                } catch (JSONException e) {
+                } catch (JSONException | SQLException e) {
                     e.printStackTrace();
                     Log.e("ERROR", e.getMessage());
                 }
@@ -95,8 +103,14 @@ public class VacationPackageListActivity extends AppCompatActivity {
 
             }
         });
-
         queue.add(stringRequest);
+        try {
+            vpAdapter = new VacationPackageAdapter(this, Utils.GENERIC_RESOURCE_ID, packageDao.queryForAll());
+            packageList.setAdapter(vpAdapter);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

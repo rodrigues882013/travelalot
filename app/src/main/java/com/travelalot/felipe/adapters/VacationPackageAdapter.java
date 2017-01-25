@@ -64,14 +64,21 @@ public class VacationPackageAdapter extends ArrayAdapter<VacationPackage> {
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup){
         VacationPackage vp = this.packages.get(position);
-        LayoutInflater inflater =
-                (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = convertView;
 
-        View v = inflater.inflate(R.layout.vacation_package_card, null);
-
-        if (convertView == null) {
-            convertView = v;
+        if (v == null){
+            LayoutInflater inflater =
+                    (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            v = inflater.inflate(R.layout.vacation_package_card, null);
         }
+
+
+//
+//        View v = inflater.inflate(R.layout.vacation_package_card, null);
+//
+//        if (convertView == null) {
+//            convertView = v;
+//        }
 
         TextView txtTitle = (TextView) convertView.findViewById(R.id.package_name);
         String packageName = vp.getPackageName();

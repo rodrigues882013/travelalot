@@ -1,16 +1,31 @@
 package com.travelalot.felipe.models;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.io.InputStream;
 
 /**
  * Created by felipe on 23/01/17.
  */
 
+@DatabaseTable(tableName = "VacationPackage")
 public class VacationPackage {
+    @DatabaseField(generatedId = true)
+    private Long id;
+
+    @DatabaseField
     private String packageName;
+
+    @DatabaseField
     private Double price;
+
+    @DatabaseField
     private String description;
+
+    @DatabaseField
     private String local;
+
     private InputStream image;
 
     public VacationPackage(String packageName,
