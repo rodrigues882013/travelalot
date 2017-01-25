@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_vacation_package_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.travelalot.felipe.VacationPackageListActivity"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_detail_title"
+                android:paddingTop="@dimen/padding_top_2"
+                android:layout_width="fill_parent"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:text="sadasdasd"
+                android:layout_height="wrap_content" />
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/img_detail_image"
+                android:layout_width="fill_parent"
+                android:layout_height="250dp" />
+
+            <TextView
+                android:id="@+id/txt_detail_description"
+                android:paddingTop="@dimen/padding_top_3"
+                android:layout_width="fill_parent"
+                android:textSize="15sp"
+                android:text="sadasdasddasdasdasdasdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/txt_detail_price"
+                android:paddingTop="@dimen/padding_top_3"
+                android:layout_width="fill_parent"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="sadasdasd"
+                android:layout_height="wrap_content" />
+
+
+            <Button
+                android:id="@+id/btn_buy"
+                android:text="@string/buy"
+                android:textSize="15sp"
+                android:layout_marginTop="@dimen/padding_top_2"
+                android:textColor="@color/white"
+                android:background="@color/colorPrimary"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/edge_button" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

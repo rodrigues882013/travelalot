@@ -1,11 +1,11 @@
 package com.travelalot.felipe;
 
-import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.Request;
@@ -13,59 +13,46 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.travelalot.felipe.adapters.VacationPackageAdapter;
-import com.travelalot.felipe.helpers.DatabaseHelper;
+import com.travelalot.felipe.core.AppController;
 import com.travelalot.felipe.models.VacationPackage;
-import com.travelalot.felipe.services.LoadImageTask;
 import com.travelalot.felipe.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.sql.SQLException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class VacationPackageListActivity extends AppCompatActivity {
 
-    private String url;
-    private List<VacationPackage> packages;
+    private List<VacationPackage> packages = new ArrayList<VacationPackage>();
     private VacationPackageAdapter vpAdapter;
     private ListView packageList;
-    protected Dao<VacationPackage, String> packageDao;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vacation_package_list);
-        final LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        try {
-            packageDao = OpenHelperManager.getHelper(this, DatabaseHelper.class).getPackagesDao();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = Utils.API_URL + "/travels";
-        final Context ctx = this;
-        packages = new ArrayList<VacationPackage>();
         packageList = (ListView) findViewById(R.id.package_list);
+        packageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                VacationPackage vp = (VacationPackage)packageList.getItemAtPosition(position);
+                goToDetailActivity(vp);
+            }
+        });
+        vpAdapter = new VacationPackageAdapter(this, packages);
+        packageList.setAdapter(vpAdapter);
+
+
+        RequestQueue queue = AppController.getInstance(this.getApplicationContext()).getRequestQueue();
+        String url = Utils.API_URL + "/travels";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -74,6 +61,7 @@ public class VacationPackageListActivity extends AppCompatActivity {
                     JSONObject vp = new JSONObject(response);
                     JSONArray packagesVacationJson = vp.getJSONArray("packages");
                     VacationPackage vPackage;
+
                     for (int i=0; i<packagesVacationJson.length(); i++){
                         JSONObject jsonObj = packagesVacationJson.getJSONObject(i);
                         String packageName = jsonObj.getString("packageName");
@@ -82,17 +70,17 @@ public class VacationPackageListActivity extends AppCompatActivity {
                         String url = jsonObj.getString("photos");
                         Double price = jsonObj.getDouble("price");
 
-                        vPackage = VacationPackageListActivity.createVacationPackage(packageName,
+                        vPackage = createVacationPackage(packageName,
                                 description,
                                 price,
                                 local,
                                 url);
-                        //packages.add(vPackage);
-
-                        packageDao.create(vPackage);
-
+                        packages.add(vPackage);
                     }
-                } catch (JSONException | SQLException e) {
+
+                    vpAdapter.notifyDataSetChanged();
+
+                } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("ERROR", e.getMessage());
                 }
@@ -103,32 +91,43 @@ public class VacationPackageListActivity extends AppCompatActivity {
 
             }
         });
+
         queue.add(stringRequest);
+
+
+
+    }
+
+    protected VacationPackage createVacationPackage(String packageName,
+                                                    String description,
+                                                    Double price,
+                                                    String local,
+                                                    String url){
+        VacationPackage vp = new VacationPackage();
         try {
-            vpAdapter = new VacationPackageAdapter(this, Utils.GENERIC_RESOURCE_ID, packageDao.queryForAll());
-            packageList.setAdapter(vpAdapter);
-        } catch (SQLException e) {
+
+            vp.setPackageName(new String(packageName.getBytes("ISO-8859-1"), "UTF-8"));
+            vp.setDescription(new String(description.getBytes("ISO-8859-1"), "UTF-8"));
+            vp.setLocal(new String(local.getBytes("ISO-8859-1"), "UTF-8"));
+            vp.setPrice(price);
+            vp.setImage(url);
+
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
-
-    }
-
-    protected static InputStream extractImage(String url){
-        return null;
-    }
-    protected static VacationPackage createVacationPackage(String packageName,
-                                                           String description,
-                                                           Double price,
-                                                           String local,
-                                                           String url){
-        VacationPackage vp = new VacationPackage();
-        vp.setPackageName(packageName);
-        vp.setDescription(description);
-        vp.setPrice(price);
-        vp.setLocal(local);
-        //vp.setImage(VacationPackageListActivity.extractImage(url));
-
         return vp;
+    }
+
+
+    protected boolean goToDetailActivity(VacationPackage _package) {
+        Intent intent = new Intent(getBaseContext(), DetailPackageActivity.class);
+        intent.putExtra("packageName", _package.getPackageName());
+        intent.putExtra("description", _package.getDescription());
+        intent.putExtra("url", _package.getImage());
+        intent.putExtra("local", _package.getLocal());
+        intent.putExtra("price", _package.getPrice().toString());
+        startActivity(intent);
+        return true;
     }
 }

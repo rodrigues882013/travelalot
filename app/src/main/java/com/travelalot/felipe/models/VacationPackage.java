@@ -9,29 +9,17 @@ import java.io.InputStream;
  * Created by felipe on 23/01/17.
  */
 
-@DatabaseTable(tableName = "VacationPackage")
 public class VacationPackage {
-    @DatabaseField(generatedId = true)
-    private Long id;
-
-    @DatabaseField
     private String packageName;
-
-    @DatabaseField
     private Double price;
-
-    @DatabaseField
     private String description;
-
-    @DatabaseField
     private String local;
-
-    private InputStream image;
+    private String image;
 
     public VacationPackage(String packageName,
                            Double price,
                            String description,
-                           InputStream image,
+                           String image,
                            String local) {
         this.packageName = packageName;
         this.price = price;
@@ -66,11 +54,11 @@ public class VacationPackage {
         this.description = description;
     }
 
-    public InputStream getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(InputStream image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
