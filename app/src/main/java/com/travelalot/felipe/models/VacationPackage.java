@@ -25,6 +25,8 @@ public class VacationPackage {
         this.image = image;
     }
 
+    public VacationPackage(){}
+
     public String getPackageName() {
         return packageName;
     }
@@ -84,7 +86,8 @@ public class VacationPackage {
         int result = packageName.hashCode();
         result = 31 * result + price.hashCode();
         result = 31 * result + description.hashCode();
-        result = 31 * result + image.hashCode();
+        result = 31 * result + local.hashCode();
+
         return result;
     }
 

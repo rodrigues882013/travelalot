@@ -85,11 +85,11 @@ public class VacationPackageAdapter extends ArrayAdapter<VacationPackage> {
             txtPrice.setText(String.format(Locale.US, "%10.0f", packageValue));
         }
 
-        ImageView imgLocal = (ImageView) convertView.findViewById(R.id.local_image);
-        Bitmap img = BitmapFactory.decodeStream(vp.getImage());
-        if (img != null){
-            imgLocal.setImageBitmap(img);
-        }
+//        ImageView imgLocal = (ImageView) convertView.findViewById(R.id.local_image);
+//        Bitmap img = BitmapFactory.decodeStream(vp.getImage());
+//        if (img != null){
+//            imgLocal.setImageBitmap(img);
+//        }
 
         return convertView;
 
