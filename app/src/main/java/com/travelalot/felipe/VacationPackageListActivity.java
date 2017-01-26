@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,7 +14,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.j256.ormlite.dao.Dao;
 import com.travelalot.felipe.adapters.VacationPackageAdapter;
 import com.travelalot.felipe.core.AppController;
 import com.travelalot.felipe.models.VacationPackage;
@@ -26,7 +26,6 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class VacationPackageListActivity extends AppCompatActivity {
 
@@ -129,5 +128,18 @@ public class VacationPackageListActivity extends AppCompatActivity {
         intent.putExtra("price", _package.getPrice().toString());
         startActivity(intent);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon action bar is clicked; go to parent activity
+                this.finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

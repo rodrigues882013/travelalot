@@ -8,4 +8,6 @@ public class Utils {
     public final static String API_URL = "https://private-f2774-travelalot.apiary-mock.com";
     final public static int GENERIC_RESOURCE_ID = 1;
 
+
+
 }

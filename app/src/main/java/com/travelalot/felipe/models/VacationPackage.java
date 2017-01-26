@@ -3,18 +3,39 @@ package com.travelalot.felipe.models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.io.InputStream;
 
 /**
  * Created by felipe on 23/01/17.
  */
 
+@DatabaseTable(tableName = "vacation_package")
 public class VacationPackage {
+
+    @DatabaseField(columnName = "id_package", generatedId = true)
+    private int id;
+
+    @DatabaseField
     private String packageName;
+
+    @DatabaseField
     private Double price;
+
+    @DatabaseField
     private String description;
+
+    @DatabaseField
     private String local;
+
+    @DatabaseField
     private String image;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public VacationPackage(String packageName,
                            Double price,

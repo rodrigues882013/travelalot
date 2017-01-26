@@ -1,5 +1,21 @@
 <resources>
-    <string name="app_name">Travel a Lot</string>
+    <string name="app_name">Viaja a bessa</string>
     <string name="title_activity_vacation_package_list">VacationPackageListActivity</string>
     <string name="buy">Comprar</string>
+
+    <string-array name="menu_entry">
+        <item> </item>
+        <item> </item>
+        <item>Início</item>
+        <item>Pacotes Comprados</item>
+    </string-array>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
 </resources>
