@@ -1,22 +1,23 @@
 package com.travelalot.felipe;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.travelalot.felipe.adapters.OrdersAdapter;
-import com.travelalot.felipe.adapters.VacationPackageAdapter;
 import com.travelalot.felipe.helpers.DatabaseHelper;
 import com.travelalot.felipe.models.Order;
-import com.travelalot.felipe.models.VacationPackage;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Created by felipe on 23/01/17.
+ */
 
 public class OrdersListActivity extends AppCompatActivity {
 

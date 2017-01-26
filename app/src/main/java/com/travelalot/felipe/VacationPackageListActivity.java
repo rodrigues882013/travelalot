@@ -27,6 +27,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by felipe on 23/01/17.
+ */
+
 public class VacationPackageListActivity extends AppCompatActivity {
 
     private List<VacationPackage> packages = new ArrayList<VacationPackage>();
