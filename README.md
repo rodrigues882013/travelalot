@@ -19,7 +19,7 @@ Simple Android App
 
 Clone this repository
 
-    git clone https://rodrigues882013@bitbucket.org/rodrigues882013/travelalot.git
+    git clone https://github.com/rodrigues882013/travelalot.git
  
 To debug mode
 
